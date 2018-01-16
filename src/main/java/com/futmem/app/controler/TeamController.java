@@ -15,31 +15,41 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.futmem.app.response.TeamResponse;
 import com.futmem.domain.model.Team;
+import com.futmem.domain.service.GoalService;
 import com.futmem.domain.service.TeamService;
 
 @RestController
 @RequestMapping("api/teams")
 public class TeamController {
-  @Autowired
-  TeamService teamService;
+    @Autowired
+    TeamService teamService;
 
-  @RequestMapping(value = "{id}", method = RequestMethod.GET)
-  public TeamResponse.Basic get(@PathVariable int id) {
-    TeamResponse.Basic response = new TeamResponse.Basic();
+    @Autowired
+    GoalService goalService;
 
-    Optional<Team> team = teamService.find(id);
+    @RequestMapping(value = "{id}", method = RequestMethod.GET)
+    public TeamResponse.Basic get(@PathVariable int id) {
+        TeamResponse.Basic response = new TeamResponse.Basic();
 
-    BeanUtils.copyProperties(team, response);
+        Optional<Team> team = teamService.find(id);
 
-    return response;
-  }
+        BeanUtils.copyProperties(team, response);
 
-  @RequestMapping(method = RequestMethod.POST)
-  @ResponseStatus(HttpStatus.CREATED)
-  public TeamResponse.Basic post(@Validated @RequestBody Team request) {
-    TeamResponse.Basic response = new TeamResponse.Basic();
-    Team team = teamService.save(request);
-    BeanUtils.copyProperties(team, response);
-    return response;
-  }
+        return response;
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public TeamResponse.Basic post(@Validated @RequestBody Team request) {
+        TeamResponse.Basic response = new TeamResponse.Basic();
+        Team team = teamService.save(request);
+        BeanUtils.copyProperties(team, response);
+        return response;
+    }
+
+    // @RequestMapping(value = "{id}/goals/ranking", method = RequestMethod.GET)
+    // public TeamResponse.Basic getGoalRanking(@PathVariable int id,
+    // @RequestParam String summary) {
+    //
+    // }
 }

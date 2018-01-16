@@ -8,28 +8,23 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.futmem.domain.model.Goal;
-import com.futmem.domain.model.GoalPK;
 import com.futmem.domain.repository.GoalRepository;
 
 @Service
 @Transactional
 public class GoalService {
-  @Autowired
-  GoalRepository goalRepository;
+    @Autowired
+    GoalRepository goalRepository;
 
-  public Optional<Goal> find(int matchId, int memberId) {
-    return Optional.ofNullable(goalRepository.findOne(new GoalPK(matchId, memberId)));
-  }
+    public Optional<Goal> find(int goalId) {
+        return Optional.ofNullable(goalRepository.findOne(goalId));
+    }
 
-  public Optional<List<Goal>> findByMemberId(int memberId) {
-    return goalRepository.findByMemberId(memberId);
-  }
+    public Optional<List<Goal>> findByMatchId(int matchId) {
+        return goalRepository.findByMatchId(matchId);
+    }
 
-  public Optional<List<Goal>> findByMatchId(int matchId) {
-    return goalRepository.findByMatchId(matchId);
-  }
-
-  public Goal save(Goal match) {
-    return goalRepository.save(match);
-  }
+    public Goal save(Goal match) {
+        return goalRepository.save(match);
+    }
 }

@@ -2,8 +2,11 @@ package com.futmem.domain.model;
 
 import java.io.Serializable;
 
-import javax.persistence.EmbeddedId;
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -20,24 +23,22 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "t_goal")
 public class Goal implements Serializable {
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  @EmbeddedId
-  private GoalPK id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "goal_id")
+    private Integer goalId;
 
-  private Integer score;
+    @ManyToOne
+    @JoinColumn(name = "goal_member_id", insertable = false, updatable = false)
+    private Member goalMember;
 
-  // bi-directional many-to-one association to Member
-  @ManyToOne
-  @JoinColumn(name = "member_id", insertable = false, updatable = false)
-  private Member member;
+    @ManyToOne
+    @JoinColumn(name = "assist_member_id", insertable = false, updatable = false)
+    private Member assistMember;
 
-  // bi-directional many-to-one association to TMatch
-  @ManyToOne
-  @JoinColumn(name = "score_id", insertable = false, updatable = false)
-  private Match match;
-
-  @ManyToOne
-  @JoinColumn(name = "team_id")
-  private Team team;
+    @ManyToOne
+    @JoinColumn(name = "score_id", insertable = false, updatable = false)
+    private Match match;
 }

@@ -28,35 +28,29 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "t_match")
 public class Match implements Serializable {
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "match_id")
-  private Integer matchId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "match_id")
+    private Integer matchId;
 
-  @Column(name = "enemy_team_name")
-  private String enemyTeamName;
+    @Column(name = "enemy_team_name")
+    private String enemyTeamName;
 
-  private Integer goals;
+    @Column(name = "goals_against")
+    private Integer goalsAgainst;
 
-  @Column(name = "goals_against")
-  private Integer goalsAgainst;
+    @Temporal(TemporalType.DATE)
+    @Column(name = "match_date")
+    private Date matchDate;
 
-  @Temporal(TemporalType.DATE)
-  @Column(name = "match_date")
-  private Date matchDate;
+    // bi-directional many-to-one association to Goal
+    @OneToMany(mappedBy = "match")
+    private List<Goal> goalList;
 
-  // bi-directional many-to-one association to Assist
-  @OneToMany(mappedBy = "match")
-  private List<Assist> assistList;
-
-  // bi-directional many-to-one association to Goal
-  @OneToMany(mappedBy = "match")
-  private List<Goal> goalList;
-
-  // bi-directional many-to-one association to Team
-  @ManyToOne
-  @JoinColumn(name = "team_id")
-  private Team team;
+    // bi-directional many-to-one association to Team
+    @ManyToOne
+    @JoinColumn(name = "team_id")
+    private Team team;
 }

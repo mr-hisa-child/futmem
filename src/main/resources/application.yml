@@ -2,7 +2,7 @@ spring:
     thymeleaf:
         cache: false
     datasource:
-        url: jdbc:postgresql://localhost:5432/futmemdb
+        url: jdbc:postgresql://localhost:15432/kintaidb
         username: postgres
         password: postgres
     jpa:

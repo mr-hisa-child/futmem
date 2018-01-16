@@ -8,12 +8,11 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import com.futmem.domain.model.Goal;
-import com.futmem.domain.model.GoalPK;
 
-public interface GoalRepository extends JpaRepository<Goal, GoalPK> {
-  @Query(value = "select g from Goal g where g.match.matchId = :matchId")
-  public Optional<List<Goal>> findByMatchId(@Param("matchId") int matchId);
+public interface GoalRepository extends JpaRepository<Goal, Integer> {
+    @Query(value = "select g from Goal g where g.match.matchId = :matchId")
+    public Optional<List<Goal>> findByMatchId(@Param("matchId") int matchId);
 
-  @Query(value = "select g from Goal g where g.member.memberId = :memberId")
-  public Optional<List<Goal>> findByMemberId(@Param("memberId") int memberId);
+    @Query(value = "select g.goalMemberId,count(g.goalId) from Goal g where g.match.teamId = :teamId and g.match.matchDate like :summary group by g.goalMemberId")
+    public Optional<List<Goal>> findGoalRanking(@Param("teamId") int teamId, @Param("summary") String summary);
 }

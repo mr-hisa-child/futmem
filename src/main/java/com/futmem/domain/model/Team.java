@@ -8,7 +8,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -24,25 +23,21 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "m_team")
 public class Team implements Serializable {
-  private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-  @Id
-  @GeneratedValue(strategy = GenerationType.IDENTITY)
-  @Column(name = "team_id")
-  private Integer teamId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "team_id")
+    private Integer teamId;
 
-  @Column(name = "team_name")
-  private String teamName;
+    @Column(name = "team_name")
+    private String teamName;
 
-  // bi-directional many-to-one association to Member
-  @OneToMany(mappedBy = "team")
-  private List<Member> memberList;
+    // bi-directional many-to-one association to Member
+    @OneToMany(mappedBy = "team")
+    private List<Member> memberList;
 
-  // bi-directional many-to-many association to User
-  @ManyToMany(mappedBy = "teamList")
-  private List<User> userList;
-
-  // bi-directional many-to-one association to TMatch
-  @OneToMany(mappedBy = "team")
-  private List<Match> matchList;
+    // bi-directional many-to-one association to TMatch
+    @OneToMany(mappedBy = "team")
+    private List<Match> matchList;
 }
